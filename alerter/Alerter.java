@@ -1,5 +1,5 @@
 public class Alerter {
-    static int alertFailureCount = 0;
+        static int alertFailureCount = 0;
     static int networkAlertStub(float celcius) {
         System.out.println("ALERT: Temperature is " + celcius + " celcius");
         // Return 200 for ok

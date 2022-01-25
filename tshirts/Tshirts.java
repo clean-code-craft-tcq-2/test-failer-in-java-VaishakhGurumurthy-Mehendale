@@ -1,5 +1,5 @@
 public class Tshirts {
-    static String size(int cms) {
+  static String size(int cms) {
         if(cms < 38) {
             return "S";
         } else if(cms > 38 && cms < 42) {

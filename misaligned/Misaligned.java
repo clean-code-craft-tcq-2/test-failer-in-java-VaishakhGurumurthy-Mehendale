@@ -1,5 +1,5 @@
 public class Misaligned {
-    static String majorColors[] = {"White", "Red", "Black", "Yellow", "Violet"};
+     static String majorColors[] = {"White", "Red", "Black", "Yellow", "Violet"};
     static String minorColors[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
     static String colorMap = new String();
     static String printColorMap() {
