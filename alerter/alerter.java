@@ -1,27 +1,81 @@
+import java.sql.Array;
+import java.util.Arrays;
+import java.util.Random;
+
 public class Alerter {
     static int alertFailureCount = 0;
+
+    //Stub to replicate real-time scenario: response can be anything in real-world
     static int networkAlertStub(float celcius) {
         System.out.println("ALERT: Temperature is " + celcius + " celcius");
-        // Return 200 for ok
-        // Return 500 for not-ok
-        // stub always succeeds and returns 200
+        int random = new Random().nextInt(2);
+        // assuming random network response, return some value
+        return new int[]{200,500}[random];
+    }
+
+    //Stub to test fail condition
+    static int networkAlertFailStub(float celcius) {
+        return 500;
+    }
+
+    //Stub to test pass condition
+    static int networkAlertPassStub(float celcius) {
         return 200;
     }
-    static void alertInCelcius(float farenheit) {
-        float celcius = (farenheit - 32) * 5 / 9;
-        int returnCode = networkAlertStub(celcius);
-        if (returnCode != 200) {
-            // non-ok response is not an error! Issues happen in life!
-            // let us keep a count of failures to report
-            // However, this code doesn't count failures!
-            // Add a test below to catch this bug. Alter the stub above, if needed.
-            alertFailureCount += 0;
+
+    //farenheit to celcius converter
+    static float returnCelcius(float farenheit){
+        return  (farenheit - 32) * 5 / 9;
+    }
+
+
+    static void alertInCelcius(float farenheit, String testTo) {
+        float celcius = returnCelcius(farenheit);
+        int responseCode = 0;
+
+        if(testTo == "fail"){
+            responseCode = networkAlertFailStub(celcius);
+        }else if(testTo == "pass"){
+            responseCode = networkAlertPassStub(celcius);
+        }else{
+            responseCode = networkAlertStub(celcius);
+        }
+        if (responseCode != 200) {
+            alertFailureCount += 1;
         }
     }
+
+    static void resetFailureCount(){
+
+        alertFailureCount = 0;
+
+    }
+
+
     public static void main(String[] args) {
-        alertInCelcius(400.5f);
-        alertInCelcius(303.6f);
+
+        //Test to check converter
+        assert(returnCelcius(86) == 30);
+
+        // Test to check fail condition
+        alertInCelcius(400.5f, "fail");
+        assert (alertFailureCount == 1);
+
+        alertInCelcius(303.6f, "fail");
+        assert (alertFailureCount == 2);
+
+        resetFailureCount();
+
+        //test to check pass condition
+        alertInCelcius(303.6f, "pass");
+        assert (alertFailureCount == 0);
+
         System.out.printf("%d alerts failed.\n", alertFailureCount);
+
+
+        //Test to check if networkStud returns expected set of values
+        assert (Arrays.asList(200, 500).contains(networkAlertStub(100)));
+
         System.out.println("All is well (maybe!)\n");
     }
 }
