@@ -38,7 +38,7 @@ public class Alerter {
         }else if(testTo == "pass"){
             returnCode = networkAlertPassStub(celcius);
         }else{
-            returnCode = networkAlertStub(celcius)
+            returnCode = networkAlertStub(celcius);
         }
         if (returnCode != 200) {
             alertFailureCount += 1;
@@ -55,7 +55,7 @@ public class Alerter {
     public static void main(String[] args) {
         
         //Test to check converter
-        assert(returnCelcius(30) == 86)
+        assert(returnCelcius(30) == 86);
 
         // Test to check fail condition
         alertInCelcius(400.5f, "fail");
